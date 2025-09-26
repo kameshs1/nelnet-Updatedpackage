@@ -1,0 +1,216 @@
+.no-data {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  margin: 8px 0 0 0;
+  border: 1px dashed #c7d1db;
+  border-radius: 8px;
+  background-color: #f8fafc;
+  color: #415a77;
+}
+
+.no-data .title {
+  font-weight: 600;
+}
+
+.no-data .hint {
+  font-size: 12px;
+  color: #6b7a90;
+}
+.head-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 8px;
+}
+.title-bar {
+  background: #224c6f;
+  color: #fff;
+  padding: 10px 14px;
+  font-weight: 700;
+  border-radius: 4px;
+  margin-bottom: 12px;
+}
+.details {
+  margin-top: 16px;
+}
+.sub-title {
+  margin: 16px 0 8px 0;
+  font-size: 15px;
+}
+.clip {
+  /* allow wrapping instead of ellipsis */
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+}
+.status {
+  padding: 4px 10px;
+  border-radius: 16px;
+  font-weight: 600;
+  background: #eef3f8;
+  color: #224c6f;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid transparent;
+}
+.status::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+}
+.status.ok {
+  background: #e9f5db;
+  color: #2e6a13;
+  border-color: #b7d7a8;
+}
+.status.err {
+  background: #fde8e8;
+  color: #9b1c1c;
+  border-color: #efb3b3;
+}
+.status.warn {
+  background: #fff4e5;
+  color: #9a5b13;
+  border-color: #f2c48a;
+}
+
+.view-link {
+  color: #1a5fb4;
+  text-decoration: underline;
+  margin-left: 20px;
+}
+
+.icon-toggle {
+  background: #fff;
+  border: 1px solid #d3d3d3;
+  cursor: pointer;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+.icon-toggle.left {
+  margin-right: 8px;
+}
+.chevron {
+  display: inline-block;
+  transition: transform 0.2s ease;
+  font-size: 18px;
+  line-height: 1;
+  vertical-align: middle;
+}
+.chevron.rotate {
+  transform: rotate(180deg);
+}
+
+.row-details {
+  background: #fafafa;
+}
+.row-details .inner {
+  margin-left: 16px;
+}
+.num { text-align: right; }
+.row-details.second .inner { margin-left: 32px; }
+
+/* Remove clipping: let file locations wrap */
+td[uTableCell] .clip {
+  display: inline;
+  max-width: none;
+  vertical-align: middle;
+}
+
+/* No special clipping for nested rows */
+.row-details.second td[uTableCell] .clip { max-width: none; }
+
+/* Request key should wrap; remove ellipsis */
+td[uTableCell] .key-clip {
+  display: inline;
+  width: auto;
+  overflow: visible;
+  text-overflow: clip;
+  white-space: normal;
+  vertical-align: middle;
+}
+
+/* Bordered wrapper to mimic card-like table container */
+.table-wrap {
+  border: 1px solid #d3d3d3;
+  border-radius: 6px;
+  background: #fff;
+  overflow: hidden;
+}
+
+/* Allow table cells to wrap to next line */
+table[u-table] {
+  table-layout: fixed;
+  width: 100%;
+}
+td[uTableCell], th[uTableHeaderCell] {
+  white-space: normal !important;
+}
+
+/* File name cell with toggle + text aligned on one line */
+.name-cell {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  max-width: 100%;
+}
+.name-clip {
+  display: inline;
+  max-width: none;
+  overflow: visible;
+  text-overflow: clip;
+  vertical-align: middle;
+}
+
+/* Status badge can wrap if needed */
+td[uTableCell] .status { overflow: visible; text-overflow: clip; white-space: normal; }
+
+/* Sorting visuals for headers */
+th[uTableHeaderCell].sortable {
+  cursor: pointer;
+  user-select: none;
+}
+th[uTableHeaderCell].sortable:focus-visible {
+  outline: 2px solid #224c6f;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+.header-content { display: inline-flex; align-items: center; gap: 6px; width: 100%; min-width: 0; flex-wrap: nowrap; }
+.header-content .header-label { flex: 1 1 auto; min-width: 0; white-space: normal; overflow: visible; text-overflow: clip; }
+.header-content .sort-icons { align-self: center; }
+.sort-icons { display: inline-flex; align-items: center; margin-left: 4px; flex: 0 0 auto; }
+.sort-trigger { background: transparent; border: none; padding: 0; margin: 0 2px 0 4px; line-height: 0; display: inline-flex; align-items: center; }
+.sort-icons u-icon { font-size: 14px; }
+.sort-icons .mat-icon { font-size: 18px; width: 18px; height: 18px; line-height: 18px; color: #224c6f; }
+
+/* Footer with paginator aligned to the right */
+.table-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 8px 6px 8px;
+}
+.table-footer .displaying {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: #223;
+  font-size: 14px;
+}
+.table-footer select {
+  border: none;
+  border-bottom: 2px solid #cfd6e6;
+  padding: 2px 6px;
+  font-size: 14px;
+  background: transparent;
+  color: #0b2139;
+}

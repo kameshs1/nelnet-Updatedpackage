@@ -1,0 +1,7 @@
+@if (shouldShow) {
+<ul class="error-messages">
+  @for (message of messages; track $index) {
+  <li>{{ message }}</li>
+  }
+</ul>
+}

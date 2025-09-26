@@ -1,0 +1,142 @@
+<div class="content">
+    <section class="search-card card">
+      <!-- <h3 class="section-title">Borrower ID</h3>
+      <app-divider></app-divider> -->
+
+      <form class="form" [formGroup]="form" (ngSubmit)="onSearch()">
+        <div class="u-grid-container u-grid-direction--column">
+          <div class="label">Search Borrower By:</div>
+          <u-form-control class="u-mt-xs-0">
+            <u-radio-button>
+              <label uLabel for="account">Account Number</label>
+              <input uRadio type="radio" id="account" name="searchBy" formControlName="searchBy" value="account" />
+            </u-radio-button>
+          </u-form-control>
+          <u-form-control >
+            <u-radio-button>
+              <label uLabel for="ssn">SSN</label>
+              <input uRadio type="radio" id="ssn" name="searchBy" formControlName="searchBy" value="ssn" />
+            </u-radio-button>
+          </u-form-control>
+        </div>
+
+        <div class="field" *ngIf="form.get('searchBy')!.value === 'account'">
+          <label for="accountNumber">Account Number</label>
+          <input id="accountNumber" type="text" inputmode="numeric" autocomplete="off" placeholder="" formControlName="accountNumber" />
+        </div>
+
+        <div class="field" *ngIf="form.get('searchBy')!.value === 'ssn'">
+          <label for="ssn">SSN</label>
+          <input id="ssn" type="text" placeholder="XXX-XX-XXXX" formControlName="ssn" />
+        </div>
+
+        <div class="actions">
+          <div class="u-grid-container u-grid-spacing--1">
+            <div class="u-grid-item u-xs-12">
+              <button u-button variant="contained" [disabled]="searchDisabled">Search</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </section>
+
+    <section class="history-card card">
+      <div class="history-header">
+        <div class="history-title">
+          <u-icon type="sync" size="small" [title]="'sync'"></u-icon>
+          <h3>History</h3>
+        </div>
+        <button class="link-button" type="button" aria-label="Clear history" (click)="clearAlertDialog.open()">
+          <u-icon type="trash" size="small" [title]="'delete'"></u-icon>
+          <span>Clear History</span>
+        </button>
+      </div>
+      <app-divider [accent]="false"></app-divider>
+
+      <u-dialog #clearAlertDialog ariaLabelledBy="alertDialogTitle">
+        <u-dialog-header>
+          <h4 uDialogTitle id="alertDialogTitle">Clear Item(s)?</h4>
+        </u-dialog-header>
+        <u-dialog-content>
+          <p>Confirm you want to clear the {{ history.length }} {{ history.length === 1 ? 'item' : 'items' }}.</p>
+        </u-dialog-content>
+        <u-dialog-actions>
+          <button u-button uDialogClose variant="contained" (click)="onClear()">Confirm</button>
+          <button u-button uDialogClose>Cancel</button>
+        </u-dialog-actions>
+      </u-dialog>
+
+      <div class="u-grid-container">
+        <div class="u-grid-item">
+          <div class="history-table-scroll" *ngIf="history.length; else emptyHistory">
+            <table u-table [columns]="columnsToRender" [data]="displayHistory">
+            <ng-template uTableHeaderOutlet let-columns>
+              <tr>
+                <th uTableHeaderCell *ngFor="let col of columns" class="sortable" [class.sorted]="sortColumn === col && !!sortDirection" (click)="setSort(col)" (keydown.enter)="setSort(col)" (keydown.space)="setSort(col)" tabindex="0" role="button" [attr.aria-sort]="sortColumn === col ? (sortDirection === 'asc' ? 'ascending' : (sortDirection === 'desc' ? 'descending' : 'none')) : 'none'">
+                  <span class="header-content">
+                    <span class="header-label">
+                      {{ columnHeaderLabels[col] ?? col }}
+                    </span>
+                    <button *ngIf="sortColumn !== col || !sortDirection" type="button" class="icon-button sort-trigger" aria-label="sort" (click)="setSort(col); $event.stopPropagation()">
+                      <u-icon type="sort" size="small" [title]="'sort'"></u-icon>
+                    </button>
+                    <button *ngIf="sortColumn === col && sortDirection" type="button" class="icon-button sort-trigger" aria-label="toggle sort" (click)="setSort(col); $event.stopPropagation()">
+                      <u-icon [type]="sortDirection === 'desc' ? 'sort-desc' : 'sort-asc'" size="small" [title]="sortDirection === 'desc' ? 'sort descending' : 'sort ascending'"></u-icon>
+                    </button>
+                  </span>
+                </th>
+              </tr>
+            </ng-template>
+            <ng-template uTableBodyOutlet let-row let-columns="columns">
+              <tr>
+                <td uTableCell *ngFor="let col of columns">
+                  <ng-container *ngIf="col !== 'email'; else default;">
+                    <span [class.nowrap]="col === 'fullName' || col === 'startDate' || col === 'ssn'">{{ row[col] }}</span>
+                  </ng-container>
+                  <ng-template #default>
+                    <a href="" uStickyHeaderFocusableItem [scrollOffset]="3">{{ row[col] }}</a>
+                  </ng-template>
+                </td>
+              </tr>
+            </ng-template>
+            </table>
+          </div>
+          <ng-template #emptyHistory>
+            <div class="result-card empty">No history yet.</div>
+          </ng-template>
+        </div>
+      </div>
+    </section>
+  </div>
+  <div class="mid-separator" aria-hidden="true" *ngIf="searched && hasSearchInput"></div>
+  <div class="results" *ngIf="searched && result; else noResults">
+    <h3 class="results-title">Search Results</h3>
+    <div class="result-card">
+      <div class="result-main">
+        <div class="name-row">
+          <a class="name link" [routerLink]="['/enrollment','list']" [state]="{ name: result.fullName, account: result.accountNumber, ssn: result.ssn }">{{ result.fullName }}</a>
+        </div>
+        <div class="meta-row">
+          <span>SSN <strong>{{ result.ssn }}</strong></span>
+          <span class="divider">|</span>
+          <span>Account Number <strong>{{ result.accountNumber }}</strong></span>
+          <span class="divider">|</span>
+          <span>Status <strong>{{ result.status }}</strong></span>
+          <!-- <span class="divider">|</span>
+          <span>Enrollment Start Date <strong>{{ result.startDate }}</strong></span>
+          <span class="divider">|</span>
+          <span>End Date <strong>{{ result.endDate }}</strong></span> -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #noResults>
+    <div class="results no-match" *ngIf="hasSearchInput && searched && form.valid">
+      <div class="result-card empty">
+        <span>No results found. Try a different {{ form.get('searchBy')!.value === 'account' ? 'account number' : 'SSN' }}.</span>
+      </div>
+    </div>
+  </ng-template>
+
+

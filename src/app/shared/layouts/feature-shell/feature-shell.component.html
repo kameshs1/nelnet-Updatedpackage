@@ -1,0 +1,11 @@
+<div class="page container-fluid">
+  <div class="toolbar" *ngIf="showShell">
+    <h2>Dashboard</h2>
+  </div>
+  <app-feature-tabs *ngIf="showShell"></app-feature-tabs>
+  <div class="content">
+    <router-outlet></router-outlet>
+  </div>
+</div>
+
+

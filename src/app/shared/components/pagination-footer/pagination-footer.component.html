@@ -1,0 +1,16 @@
+<div class="table-footer">
+  <div class="displaying">
+    Displaying
+    <select [ngModel]="pageSize" (ngModelChange)="onPageSizeChange($event)">
+      <option *ngFor="let s of pageSizeOptions" [ngValue]="s">{{ s }}</option>
+    </select>
+    of {{ totalRecords }} Records
+  </div>
+  <app-paginator
+    [pageIndex]="pageIndex"
+    [totalPages]="totalPages"
+    (pageChange)="onPageChange($event)"
+  ></app-paginator>
+</div>
+
+

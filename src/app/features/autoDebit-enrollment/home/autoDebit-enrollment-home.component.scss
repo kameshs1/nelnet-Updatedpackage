@@ -1,0 +1,280 @@
+.page {
+  padding: 16px;
+}
+.toolbar {
+  background: #224c6f;
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 4px 4px 0 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr max-content;
+  column-gap: 40px;
+  align-items: center;
+}
+/* Keep the action button vertically centered and right-aligned */
+.toolbar .actions {
+  align-self: center;
+  justify-self: end;
+  display: flex;
+  align-items: center;
+}
+.toolbar .actions .u-grid-container {
+  margin: 0;
+}
+.toolbar .actions [u-button],
+.toolbar .actions .btn {
+  margin: 0;
+}
+.header-left {
+  display: contents;
+}
+.user-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+}
+.user-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+}
+.user-chip .avatar {
+  color: #fff;
+}
+.meta {
+  display: contents;
+}
+.meta .ssn {
+  margin-right: 0;
+}
+.meta .divider {
+  display: none;
+}
+.page-title {
+  margin: 18px 0px 18px 0px;
+  font-size: 16px;
+  padding-left: 20px;
+}
+/* Divider styles moved to shared component */
+.subtitle-blue {
+  margin: 18px 0px 18px 0px;
+  color: #224c6f;
+  font-size: 18px;
+  font-weight: 700;
+}
+.toolbar .return {
+  background: #8cc419;
+  color: #000;
+  border-radius: 8px;
+  padding: 6px 12px;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  justify-self: end;
+}
+.content {
+  background: #fff;
+  border-radius: 0 0 8px 8px;
+  padding: 12px 12px 0 12px;
+}
+.table-wrap {
+  width: 100%;
+  overflow-x: hidden; /* avoid horizontal scroll */
+}
+table[u-table] {
+  table-layout: fixed; /* enforce column widths */
+  width: 100%;
+}
+[uTableCell] {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+[uTableCell].right {
+  text-align: right;
+}
+.header-content {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  min-width: 0; /* allow children to shrink for ellipsis */
+}
+.header-label {
+  flex: 1 1 auto;
+  min-width: 0;
+  /* Allow header text to wrap to a second line instead of ellipsizing */
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+  word-break: break-word;
+  line-height: 1.15;
+}
+.sort-icons {
+  flex: 0 0 auto;
+}
+.sort-trigger { background: transparent; border: none; padding: 0; margin: 0 2px 0 4px; line-height: 0; display: inline-flex; align-items: center; }
+.sortable {
+  user-select: none;
+}
+.block-header {
+  font-size: 14px;
+  background: #224c6f;
+  color: #fff;
+  font-weight: 700;
+  padding: 10px 14px;
+  // border-radius: 6px; Removed as no radius in figma design
+  margin-bottom: 12px;
+}
+.table {
+  border: 1px solid #e6e9ef; /* keep consistent light grey border */
+  border-radius: 8px;
+  /* Allow header and columns to render fully; scrolling handled by wrapper */
+  overflow: visible;
+}
+
+/* Allow horizontal scroll on small screens while keeping the card layout intact */
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+}
+.thead,
+.tr {
+  display: grid;
+  /* Uniform, responsive widths per column (min width then flex) */
+  grid-template-columns:
+    minmax(110px, 1fr) /* EFT Control */
+    minmax(160px, 1.4fr) /* Incentive Eligible */
+    minmax(120px, 1fr) /* Start Date */
+    minmax(120px, 1fr) /* End Date */
+    minmax(110px, 1fr) /* Bank ID */
+    minmax(70px, 0.7fr) /* C/S Ind */
+    minmax(140px, 1.2fr) /* Last Change Date */
+    minmax(140px, 1.2fr) /* Override Switch */
+    minmax(90px, 0.9fr) /* Process Day */
+    140px; /* Actions */
+}
+.thead {
+  position: relative;
+  font-weight: 700;
+  color: #224c6f;
+  background: #fff;
+  z-index: 1;
+}
+.thead::after {
+  display: none;
+}
+.th,
+.td {
+  padding: 9px;
+  font-size: 14px;
+}
+.th {
+  display: flex;
+  align-items: center;
+}
+.thead .th:last-child {
+  justify-content: center;
+  padding-right: 0;
+}
+.thead .th {
+  border-bottom: 2px solid #7fbf39;
+}
+.tbody .tr:nth-child(odd) {
+  background: #f4f6f9;
+}
+
+/* Remove ellipsis truncation for cell content that used this class */
+.ellipsis {
+  display: inline;
+  max-width: none;
+  overflow: visible;
+  white-space: normal;
+  text-overflow: clip;
+  vertical-align: middle;
+}
+
+/* Ensure no extra border conflicts under header */
+.tbody {
+  border-top: 0;
+}
+.icon-button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #224c6f;
+}
+.td.actions {
+  display: inline-flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+  padding-right: 8px;
+}
+.icon-link {
+  background: transparent;
+  border: none;
+  color: #fff;
+  vertical-align: middle;
+  cursor: pointer;
+  padding: 0 2px;
+  margin-left: 6px;
+}
+
+.table-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 8px 6px 8px;
+  margin-bottom: 1px;
+}
+.table-footer .displaying {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: #223;
+  font-size: 14px;
+}
+.table-footer select {
+  border: none;
+  border-bottom: 2px solid #cfd6e6;
+  padding: 2px 6px;
+  font-size: 14px;
+  background: transparent;
+  color: #0b2139;
+}
+.paginator {
+  display: inline-flex;
+  gap: 12px;
+  align-items: center;
+}
+.paginator .page,
+.paginator .nav {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  border: 1px solid #2a5675;
+  color: #2a5675;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+}
+.paginator .page.active {
+  background: #e6f0fb;
+}
+.paginator .page:hover,
+.paginator .nav:hover:not([disabled]) {
+  background: #f3f8ff;
+}
+.paginator .nav[disabled] {
+  opacity: 0.35;
+  cursor: default;
+}
+
+section {
+  border: 1px solid #e6e9ef;
+}

@@ -1,0 +1,7 @@
+<nav class="tabs" aria-label="Primary feature tabs">
+  <a class="tab" [routerLink]="['/dashboard']" [skipLocationChange]="true" [class.active]="isLookupActive()">Autodebit Maintenance</a>
+  <a class="tab" [routerLink]="['/dashboard','job-console']" [queryParams]="{ type: 'ade' }" [skipLocationChange]="true" [class.active]="isAdeConsoleActive()">Autodebit Enrollment Job Console</a>
+  <a class="tab" [routerLink]="['/dashboard','job-console']" [queryParams]="{ type: 'ach' }" [skipLocationChange]="true" [class.active]="isAchConsoleActive()">ACH File Generation Job Console</a>
+</nav>
+
+

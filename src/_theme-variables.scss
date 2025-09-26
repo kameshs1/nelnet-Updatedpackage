@@ -1,0 +1,5 @@
+@forward "@nelnet/unifi-components-angular/src/lib/scss/theming/nelnet-theme-variables" with (
+  // Configure theme variables
+  $u-link-intext-selectors: "p",
+  $u-layout-constrained: 768px
+);

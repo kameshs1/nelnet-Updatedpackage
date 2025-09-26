@@ -1,0 +1,131 @@
+/* You can add global styles to this file, and also import other style files */
+@use "theme-tokens";
+@use "theme-variables";
+@use "@nelnet/unifi-components-web/src/sass/core/util/breakpoints/mixins";
+
+// Only include this once in your app
+@use "@nelnet/unifi-components-angular/src/lib/scss/theming/unifi-core";
+@include unifi-core.u-core();
+
+.skip-link {
+  position: absolute;
+  top: auto;
+  left: -10000px;
+  overflow: hidden;
+  background: #FFF;
+  color: #000;
+  padding: 5px;
+  border-radius: 0 0 2px 2px;
+  &:focus {
+    width: auto;
+    height: auto;
+    line-height: 1.5;
+    margin-left: 1rem;
+    left: 0;
+    z-index: 31;
+    top: 0;
+  }
+}
+.main-container {
+  margin-top: 1rem;
+  //margin-left: auto;
+}
+main {
+  padding: 3rem 0.3rem;
+}
+a.logo {
+  display: flex;
+  align-items: center;
+  color: white !important;
+  text-decoration: none;
+  svg {
+    height: 2.25rem;
+    width: auto;
+    margin: 0 0.75rem;
+  }
+}
+.username {
+  display: none;
+  align-items: center;
+  margin-left: auto;
+  margin-right: 0.5rem;
+}
+.user-avatar {
+  background-color: white;
+  border-radius: 50%;
+  height: 2rem;
+  width: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  svg {
+    fill: theme-tokens.$u-theme-primary;
+  }
+}
+button.logout {
+  margin-bottom: 0;
+  display: none;
+  text-transform: uppercase;
+}
+nav {
+  width: 100%;
+  ul {
+    padding-left: 0;
+    list-style: none;
+    li {
+      a {
+        display: block;
+        padding: 0.5rem;
+        color: theme-tokens.$u-theme-black !important;
+        font-size: 0.9rem;
+        text-decoration: none;
+        &:hover,
+        &:focus {
+          background-color: theme-tokens.$u-theme-gray-050;
+        }
+        &.active {
+          font-weight: 600;
+          ~ ul {
+            display: block;
+          }
+        }
+      }
+      ul {
+        display: none;
+        li {
+          a {
+            padding-left: 1.5rem;
+            &.active {
+              font-weight: 600;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+@include mixins.u-media-breakpoint-up(sm) {
+  .username {
+    display: flex;
+  }
+  button.logout {
+    display: flex;
+  }
+}
+@include mixins.u-media-breakpoint-up(md) {
+  main {
+    // width: calc(100% - 2rem);
+  }
+  .main-container {
+    // width: calc(100% - 15rem);
+  }
+  button.menu {
+    display: none;
+  }
+  u-drawer {
+    margin-top: 64px;
+  }
+  .logo {
+    margin-left: 0;
+  }
+}

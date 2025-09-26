@@ -1,0 +1,17 @@
+.paginator { display: inline-flex; gap: 6px; align-items: center; }
+.page,
+.nav {
+  background: #fff;
+  border: 1px solid #e6e9ef;
+  border-radius: 6px;
+  padding: 4px 10px;
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+.page.active { background: #eaf2fb; border-color: #cfe1f2; font-weight: 600; }
+.nav[disabled],
+.page[disabled] { opacity: .6; cursor: not-allowed; box-shadow: none; }
+
+.ellipsis { padding: 0 4px; color: #7b8794; }
+
+

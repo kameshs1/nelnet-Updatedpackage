@@ -1,0 +1,40 @@
+<a href="#main" class="skip-link">Skip to main content</a>
+<u-app-bar color="primary" position="fixed">
+  <button type="button" class="u-icon-button u-button--inherit menu">
+    <u-icon type="hamburger" title="Menu" [ariaHidden]="true" [iconClasses]="['u-icon-button__icon']" [size]="18"></u-icon>
+  </button>
+  <a href="/" class="logo">
+    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+      viewBox="0 0 56 56" style="enable-background:new 0 0 56 56;" xml:space="preserve" role="img" focusable="false">
+      <title>Nelnet</title>
+      <g id="Layer_2_1_">
+        <g id="Layer_1-2">
+          <path fill="white" d="M29.6,14.6c-2.6,0-5,1.1-6.8,2.9l-0.1-1.8c0-0.2-0.2-0.4-0.4-0.4h-5.7c-0.2,0-0.4,0.2-0.4,0.4l0,0l0,0v25.3
+            c0,0.2,0.2,0.4,0.4,0.4h6.3c0.2,0,0.4-0.2,0.4-0.4V23.5c2.3-2.6,3.3-3,4.9-3c2.1,0,4.4,1.4,4.4,5.5v15c0,0.2,0.2,0.4,0.4,0.4h6.3
+            c0.2,0,0.4-0.2,0.4-0.4c0,0,0,0,0,0l0,0V24.6C39.7,18,34.7,14.6,29.6,14.6"/>
+          <path fill="white" d="M28,0C12.5,0,0,12.5,0,28s12.5,28,28,28s28-12.5,28-28S43.5,0,28,0 M50.2,28c0,12.3-10,22.2-22.2,22.2
+            S5.8,40.2,5.8,27.9c0-12.2,10-22.2,22.2-22.2C40.3,5.8,50.2,15.7,50.2,28C50.2,28,50.2,28,50.2,28L50.2,28"/>
+        </g>
+      </g>
+    </svg>
+    NDS Financial Systems - Nelnet
+  </a>
+</u-app-bar>
+<div class="main-container">
+  <main>
+   
+    <router-outlet></router-outlet>
+  </main>
+  <app-toast-container></app-toast-container>
+
+<app-loader-overlay></app-loader-overlay>
+
+<footer class="app-footer">
+  <div class="copyright">© 2025 Nelnet, Inc. and Affiliates. All Rights Reserved. (Nelnet Servicing, LLC NMLS ID# 1508613)</div>
+  <div class="footer-links">
+    <a href="#">Privacy Statement</a>
+    <a href="#">Copyright</a>
+    <a href="#">Terms &amp; Conditions</a>
+  </div>
+</footer>
+</div>

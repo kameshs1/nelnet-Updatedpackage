@@ -1,0 +1,222 @@
+<div class="head-actions">
+  <div class="actions">
+    <div class="u-grid-container u-grid-spacing--1">
+      <div class="u-grid-item u-xs-12">
+        <button u-button variant="contained" (click)="alertDialog.open()">Invoke Autodebit Enrollment</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<u-dialog #alertDialog ariaLabelledBy="alertDialogTitle">
+  <u-dialog-header>
+    <h4 uDialogTitle id="alertDialogTitle">Invoke Autodebit Enrollment</h4>
+  </u-dialog-header>
+  <u-dialog-content>
+    <p>Are you sure you want to enroll in Auto-Debit? Your payments will be automatically deducted on the due date.</p>
+  </u-dialog-content>
+  <u-dialog-actions>
+    <button u-button uDialogClose variant="contained" (click)="invokeEnrollment()">Confirm</button>
+    <button u-button uDialogClose>No</button>
+  </u-dialog-actions>
+</u-dialog>
+
+ 
+
+<div class="title-bar">Job Run Status</div>
+
+<div class="u-grid-container">
+  <div class="u-grid-item">
+    <div class="table-wrap">
+    <table u-table [columns]="runColumnsToRender" [data]="runRows" [displayHover]="true">
+      <ng-template uTableHeaderOutlet let-columns>
+        <tr>
+          <th uTableHeaderCell *ngFor="let col of columns" class="sortable" (click)="setRunSort(col)" (keydown.enter)="setRunSort(col)" (keydown.space)="setRunSort(col)" tabindex="0" role="button" [attr.aria-sort]="runSortColumn === col ? (runSortDirection === 'asc' ? 'ascending' : (runSortDirection === 'desc' ? 'descending' : 'none')) : 'none'">
+            <span class="header-content">
+              <span class="header-label" [title]="runColumnHeader[col] ?? (col | titlecase)">{{ runColumnHeader[col] ?? (col | titlecase) }}</span>
+              <button
+                *ngIf="runSortColumn !== col || !runSortDirection"
+                type="button"
+                class="icon-button sort-trigger"
+                aria-label="sort"
+                (click)="setRunSort(col); $event.stopPropagation()"
+              >
+                <u-icon type="sort" size="small" [title]="'sort'"></u-icon>
+              </button>
+              <button
+                *ngIf="runSortColumn === col && runSortDirection"
+                type="button"
+                class="icon-button sort-trigger"
+                aria-label="toggle sort"
+                (click)="setRunSort(col); $event.stopPropagation()"
+              >
+                <u-icon [type]="runSortDirection === 'desc' ? 'sort-desc' : 'sort-asc'" size="small" [title]="runSortDirection === 'desc' ? 'sort descending' : 'sort ascending'"></u-icon>
+              </button>
+            </span>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template uTableBodyOutlet let-row let-columns="columns">
+        <tr>
+          <td uTableCell *ngFor="let col of columns" [class.num]="col==='filesCount'">
+            <ng-container [ngSwitch]="col">
+              <ng-container *ngSwitchCase="'lastRun'">
+                <button class="icon-toggle left" type="button" (click)="toggleDetails(runRows.indexOf(row))" [attr.aria-expanded]="expandedIndex===runRows.indexOf(row)">
+                  <span class="chevron" [class.rotate]="expandedIndex===runRows.indexOf(row)">▾</span>
+                </button>
+                <span>{{ row[col] }}</span>
+              </ng-container>
+              <ng-container *ngSwitchCase="'status'">{{ row.status }}</ng-container>
+              <ng-container *ngSwitchDefault>
+                {{ row[col] }}
+              </ng-container>
+            </ng-container>
+          </td>
+        </tr>
+
+        <tr class="row-details" *ngIf="expandedIndex===runRows.indexOf(row)">
+          <td [attr.colspan]="columns.length">
+            <div class="inner">
+            <div class="table-wrap">
+            <table u-table [columns]="fileColumnsToRender" [data]="files" [displayHover]="true">
+              <ng-template uTableHeaderOutlet let-columns>
+                <tr>
+                  <th uTableHeaderCell *ngFor="let col of columns" class="sortable" (click)="setFileSort(col)" (keydown.enter)="setFileSort(col)" (keydown.space)="setFileSort(col)" tabindex="0" role="button" [attr.aria-sort]="fileSortColumn === col ? (fileSortDirection === 'asc' ? 'ascending' : (fileSortDirection === 'desc' ? 'descending' : 'none')) : 'none'">
+                    <span class="header-content">
+                      <span class="header-label" [title]="fileColumnHeader[col] ?? (col | titlecase)">{{ fileColumnHeader[col] ?? (col | titlecase) }}</span>
+                      <button *ngIf="fileSortColumn !== col || !fileSortDirection" type="button" class="icon-button sort-trigger" aria-label="sort" (click)="setFileSort(col); $event.stopPropagation()">
+                        <u-icon type="sort" size="small" [title]="'sort'"></u-icon>
+                      </button>
+                      <button *ngIf="fileSortColumn === col && fileSortDirection" type="button" class="icon-button sort-trigger" aria-label="toggle sort" (click)="setFileSort(col); $event.stopPropagation()">
+                        <u-icon [type]="fileSortDirection === 'desc' ? 'sort-desc' : 'sort-asc'" size="small" [title]="fileSortDirection === 'desc' ? 'sort descending' : 'sort ascending'"></u-icon>
+                      </button>
+                    </span>
+                  </th>
+                </tr>
+              </ng-template>
+              <ng-template uTableBodyOutlet let-row let-columns="columns">
+                <tr>
+                  <td uTableCell *ngFor="let col of columns" [class.num]="col==='count' || col==='success' || col==='failed' || col==='rejected'">
+                    <ng-container [ngSwitch]="col">
+                      <ng-container *ngSwitchCase="'name'">
+                        <span class="name-cell">
+                          <button class="icon-toggle left" type="button" (click)="toggleFileDetails(files.indexOf(row))" [attr.aria-expanded]="expandedFileIndex===files.indexOf(row)">
+                            <span class="chevron" [class.rotate]="expandedFileIndex===files.indexOf(row)">▾</span>
+                          </button>
+                          <span class="linkish name-clip">{{ row[col] }}</span>
+                        </span>
+                      </ng-container>
+                      <ng-container *ngSwitchCase="'status'">{{ row.status }}</ng-container>
+                      <ng-container *ngSwitchDefault>
+                        <ng-container [ngSwitch]="col">
+                          <ng-container *ngSwitchCase="'location'">
+                          <span class="clip">{{ row[col] }}</span>
+                          </ng-container>
+                          <ng-container *ngSwitchCase="'success'">
+                            <a href="javascript:void(0)" class="linkish" (click)="showRequestsFor(files.indexOf(row), 'Succeeded')">{{ row[col] }}</a>
+                          </ng-container>
+                          <ng-container *ngSwitchCase="'failed'">
+                            <a href="javascript:void(0)" class="linkish" (click)="showRequestsFor(files.indexOf(row), 'Failed')">{{ row[col] }}</a>
+                          </ng-container>
+                          <ng-container *ngSwitchCase="'rejected'">
+                            <a href="javascript:void(0)" class="linkish" (click)="showRequestsFor(files.indexOf(row), 'Rejected')">{{ row[col] }}</a>
+                          </ng-container>
+                          <ng-container *ngSwitchDefault>
+                            {{ row[col] }}
+                          </ng-container>
+                        </ng-container>
+                      </ng-container>
+                    </ng-container>
+                  </td>
+                </tr>
+                <tr class="row-details second" *ngIf="expandedFileIndex===files.indexOf(row)">
+                  <td [attr.colspan]="columns.length">
+                    <div class="inner">
+                      <div class="table-wrap">
+                        <table u-table [columns]="requestColumnsToRender" [data]="requests" [displayHover]="true">
+                          <ng-template uTableHeaderOutlet let-columns>
+                            <tr>
+                              <th uTableHeaderCell *ngFor="let col of columns" class="sortable" (click)="setRequestSort(col)" (keydown.enter)="setRequestSort(col)" (keydown.space)="setRequestSort(col)" tabindex="0" role="button" [attr.aria-sort]="requestSortColumn === col ? (requestSortDirection === 'asc' ? 'ascending' : (requestSortDirection === 'desc' ? 'descending' : 'none')) : 'none'">
+                                <span class="header-content">
+                                  <span class="header-label" [title]="requestColumnHeader[col] ?? (col | titlecase)">{{ requestColumnHeader[col] ?? (col | titlecase) }}</span>
+                                  <button *ngIf="requestSortColumn !== col || !requestSortDirection" type="button" class="icon-button sort-trigger" aria-label="sort" (click)="setRequestSort(col); $event.stopPropagation()">
+                                    <u-icon type="sort" size="small" [title]="'sort'"></u-icon>
+                                  </button>
+                                  <button *ngIf="requestSortColumn === col && requestSortDirection" type="button" class="icon-button sort-trigger" aria-label="toggle sort" (click)="setRequestSort(col); $event.stopPropagation()">
+                                    <u-icon [type]="requestSortDirection === 'desc' ? 'sort-desc' : 'sort-asc'" size="small" [title]="requestSortDirection === 'desc' ? 'sort descending' : 'sort ascending'"></u-icon>
+                                  </button>
+                                </span>
+                              </th>
+                            </tr>
+                          </ng-template>
+                          <ng-template uTableBodyOutlet let-row let-columns="columns">
+                            <tr>
+                              <td uTableCell *ngFor="let col of columns" [class.num]="col==='retry'">
+                                <ng-container [ngSwitch]="col">
+                                  <ng-container *ngSwitchCase="'status'">{{ row.status }}</ng-container>
+                                  <ng-container *ngSwitchDefault>
+                                    <ng-container [ngSwitch]="col">
+                                      <ng-container *ngSwitchCase="'requestKey'">
+                                        <span class="key-clip" [title]="row[col]">{{ row[col] }}</span>
+                                      </ng-container>
+                                      <ng-container *ngSwitchCase="'payload'">
+                                        <a href="javascript:void(0)" class="view-link" (click)="selectPayload(row); viewDialog.open()">View</a>
+                                      </ng-container>
+                                      <ng-container *ngSwitchDefault>
+                                        {{ row[col] }}
+                                      </ng-container>
+                                    </ng-container>
+                                  </ng-container>
+                                </ng-container>
+                              </td>
+                            </tr>
+                          </ng-template>
+                        </table>
+                        <app-empty-state *ngIf="totalRecords === 0" title="No requests found" hint="There are no requests to display."></app-empty-state>
+                        <app-pagination-footer
+                          *ngIf="totalRecords > 0"
+                          [totalRecords]="totalRecords"
+                          (pageChange)="goToPage($event)"
+                          (pageSizeChange)="setPageSize($event)"
+                        ></app-pagination-footer>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </ng-template>
+            </table>
+            <app-empty-state *ngIf="totalFileRecords === 0" title="No files found" hint="No output files available for this run."></app-empty-state>
+            <app-pagination-footer
+              *ngIf="totalFileRecords > 0"
+              [totalRecords]="totalFileRecords"
+              (pageChange)="goToFilesPage($event)"
+              (pageSizeChange)="setFilesPageSize($event)"
+            ></app-pagination-footer>
+            </div>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </table>
+    <app-empty-state *ngIf="totalRunRecords === 0" title="No job runs found" hint="Try refreshing or run a job to see results."></app-empty-state>
+    <app-pagination-footer
+      *ngIf="totalRunRecords > 0"
+      [totalRecords]="totalRunRecords"
+      (pageChange)="goToRunPage($event)"
+      (pageSizeChange)="setRunPageSize($event)"
+    ></app-pagination-footer>
+    </div>
+  </div>
+</div>
+
+<u-dialog #viewDialog ariaLabelledBy="viewDialogTitle">
+  <u-dialog-header>
+    <h4 uDialogTitle id="viewDialogTitle">Request Payload</h4>
+  </u-dialog-header>
+  <u-dialog-content>
+    <pre class="json-payload">{{ selectedPayload | json }}</pre>
+  </u-dialog-content>
+</u-dialog>
+
+
+

@@ -1,0 +1,15 @@
+<div class="modal-backdrop" *ngIf="open" (click)="backdrop ? closed.emit() : null"></div>
+<div class="modal" *ngIf="open" [class.mobile-sheet]="mobileSheet" [style.--modal-max-width]="maxWidth" [style.--modal-max-height]="maxHeight" [style.--modal-height]="height" role="dialog" aria-modal="true" [attr.aria-label]="ariaLabel" [attr.aria-labelledby]="!ariaLabel && title ? titleId : null">
+  <div class="modal-header" *ngIf="title || closeable">
+    <h3 class="title" *ngIf="title" [id]="titleId">{{ title }}</h3>
+    <button *ngIf="closeable" class="close" type="button" (click)="closed.emit()" aria-label="Close">✕</button>
+  </div>
+  <div class="modal-body">
+    <ng-content></ng-content>
+  </div>
+  <div class="modal-footer" *ngIf="showFooter">
+    <ng-content select="[modal-footer]"></ng-content>
+  </div>
+</div>
+
+

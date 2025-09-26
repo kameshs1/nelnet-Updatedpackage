@@ -1,0 +1,12 @@
+<div class="paginator" role="navigation" aria-label="Pagination Navigation">
+  <button class="nav" type="button" (click)="prev()" [disabled]="pageIndex <= 0" aria-label="Previous page">‹</button>
+  <ng-container *ngFor="let p of pages; let idx = index">
+    <button *ngIf="isNumber(p); else ellipsis" class="page" type="button" [class.active]="toIndex(p) === pageIndex" (click)="goTo(toIndex(p))" [attr.aria-current]="toIndex(p) === pageIndex ? 'page' : null" [attr.aria-label]="'Page ' + p">{{ p }}</button>
+    <ng-template #ellipsis>
+      <span class="ellipsis" aria-hidden="true">…</span>
+    </ng-template>
+  </ng-container>
+  <button class="nav" type="button" (click)="next()" [disabled]="pageIndex >= totalPages - 1" aria-label="Next page">›</button>
+</div>
+
+

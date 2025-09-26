@@ -1,0 +1,22 @@
+.empty-state {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  margin: 8px 0 0 0;
+  border: 1px dashed #c7d1db;
+  border-radius: 8px;
+  background-color: #f8fafc;
+  color: #415a77;
+}
+
+.empty-state .title {
+  font-weight: 600;
+}
+
+.empty-state .hint {
+  font-size: 12px;
+  color: #6b7a90;
+}
+
+

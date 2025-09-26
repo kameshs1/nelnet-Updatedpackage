@@ -1,0 +1,23 @@
+.divider {
+  height: 2px;
+  background: #e6e9ef;
+  margin: 8px 0 6px 0;
+  position: relative;
+}
+.divider::before {
+  content: '';
+  display: block;
+  width: 220px;
+  height: 3px;
+  background: #224c6f;
+  position: absolute;
+  top: -2px;
+  left: 0;
+}
+
+/* variant without blue accent */
+.divider.no-accent::before {
+  display: none;
+}
+
+

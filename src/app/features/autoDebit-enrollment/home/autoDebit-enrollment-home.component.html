@@ -1,0 +1,219 @@
+<div class="u-grid-container u-px-xs-2 u-py-xs-2 u-mb-xs-2 u-paper">
+  <div class="u-grid-item u-xs-12">
+    <u-app-bar color="primary">
+      <div class="u-grid-item">
+        <div class="u-grid-container u-grid-justify--start u-grid-alignitems--center">
+          <div class="u-grid-item u-xs-auto u-mr-xs-1">
+            <u-icon type="person" size="medium" [title]="'person'"></u-icon>
+          </div>
+          <div class="u-grid-item u-xs-auto">
+            <h1 class="u-typography--h4 u-mb-xs-0 u-mt-xs-0">{{ userName }}</h1>
+          </div>
+        </div>
+      </div>
+      <div class="u-grid-item">
+        <div class="u-grid-container u-grid-justify--start u-grid-alignitems--center">
+          <div class="u-grid-item u-xs-auto u-mr-xs-1">
+            <h1 class="u-typography--h4 u-mb-xs-0 u-mt-xs-0">
+              SSN: {{ showSsn ? ssn : '  ***-**-****  ' }}
+            </h1>
+          </div>
+          <div class="u-grid-item u-xs-auto u-mr-xs-1">
+            <button
+              u-button
+              variant="icon"
+              class="u-button--inherit u-mb-xs-0"
+              aria-label="Menu"
+              (click)="toggleSsn()"
+            >
+              <u-icon
+                *ngIf="showSsn"
+                type="visibility-off"
+                size="medium"
+                [title]="'visibility-off'"
+              ></u-icon>
+              <u-icon
+                *ngIf="!showSsn"
+                type="visibility"
+                size="medium"
+                [title]="'visibility'"
+              ></u-icon>
+            </button>
+          </div>
+          <div class="u-grid-item u-xs-auto">
+            <button
+              u-button
+              variant="icon"
+              class="u-button--inherit u-mb-xs-0"
+              aria-label="Menu"
+              (click)="copy(ssn)"
+            >
+              <u-icon type="clipboard" size="medium" [title]="'copy'"></u-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="u-grid-item">
+        <div class="u-grid-container u-grid-justify--start u-grid-alignitems--center">
+          <div class="u-grid-item u-xs-auto u-mr-xs-1">
+            <h1 class="u-typography--h4 u-mb-xs-0 u-mt-xs-0">Account #: {{ account }}</h1>
+          </div>
+          <div class="u-grid-item u-xs-auto">
+            <button
+              u-button
+              variant="icon"
+              class="u-button--inherit u-mb-xs-0"
+              aria-label="Menu"
+              (click)="copy(account)"
+            >
+              <u-icon type="clipboard" size="medium" [title]="'copy'"></u-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="u-grid-item">
+        <div class="u-grid-container u-grid-justify--end u-grid-alignitems--center">
+          <div class="u-grid-item u-xs-auto">
+            <button u-button variant="contained" (click)="onBack()" class="u-mb-xs-0" color="neutral">
+              Return to Search
+            </button>
+          </div>
+        </div>
+      </div>
+    </u-app-bar>
+  </div>
+  <div class="u-grid-item u-xs-12">
+    <h2 class="page-title">Autodebit Enrollment</h2>
+    <app-divider></app-divider>
+    <div class="u-grid-container u-grid-justify--between u-grid-alignitems--center">
+      <div class="grid-item">
+        <div class="subtitle-blue">Autodebit Enrollment</div>
+      </div>
+      <div class="grid-item">
+        <button u-button variant="contained" (click)="openDialog('add')">Add Enrollment</button>
+      </div>
+    </div>
+
+    <div class="content">
+      <section class="card">
+        <div class="block-header">Autodebit Enrollment List</div>
+        <div class="u-grid-container">
+          <div class="u-grid-item u-xs-12">
+            <div class="table-wrap">
+            <table u-table [columns]="columnsToRender" [data]="rows" [displayHover]="true">
+              <ng-template uTableHeaderOutlet let-columns>
+                <tr>
+                  <th uTableHeaderCell *ngFor="let col of columns" class="sortable" (click)="setRunSort(col.key)"
+                    (keydown.enter)="setRunSort(col.key)" (keydown.space)="setRunSort(col.key)" tabindex="0"
+                    role="button" [attr.aria-sort]="
+                      runSortColumn === col.key
+                        ? runSortDirection === 'asc'
+                          ? 'ascending'
+                          : runSortDirection === 'desc'
+                          ? 'descending'
+                          : 'none'
+                        : 'none'
+                    ">
+                    <span class="header-content">
+                      <span class="header-label" [title]="col.text">{{ col.text }}</span>
+                      <button *ngIf="runSortColumn !== col.key || !runSortDirection" type="button" class="icon-button sort-trigger" aria-label="sort" (click)="setRunSort(col.key); $event.stopPropagation()">
+                        <u-icon type="sort" size="small" [title]="'sort'"></u-icon>
+                      </button>
+                      <button *ngIf="runSortColumn === col.key && runSortDirection" type="button" class="icon-button sort-trigger" aria-label="toggle sort" (click)="setRunSort(col.key); $event.stopPropagation()">
+                        <u-icon [type]="runSortDirection === 'desc' ? 'sort-desc' : 'sort-asc'" size="small" [title]="runSortDirection === 'desc' ? 'sort descending' : 'sort ascending'"></u-icon>
+                      </button>
+                    </span>
+                  </th>
+                  <th uTableHeaderCell>Actions</th>
+                </tr>
+              </ng-template>
+              <ng-template uTableBodyOutlet let-data let-columns="columns">
+                <tr>
+                  <td uTableCell *ngFor="let col of columns" [class.right]="col.key === 'processDay' || col.key === 'eftControl' || col.key === 'eftEligible' || col.key === 'override'">
+                    <ng-container [ngSwitch]="col.key">
+                      <ng-container *ngSwitchCase="'startDate'">{{ data[col.key] | usDate }}</ng-container>
+                      <ng-container *ngSwitchCase="'endDate'">{{ data[col.key] | usDate }}</ng-container>
+                      <ng-container *ngSwitchCase="'bankId'">{{ data[col.key] }}</ng-container>
+                      <ng-container *ngSwitchDefault>{{ data[col.key] }}</ng-container>
+                    </ng-container>
+                  </td>
+                  <td uTableCell>
+                    <button
+                      type="button"
+                      class="icon-button"
+                      aria-label="view"
+                      (click)="openDialog('view', data)"
+                    >
+                    <u-icon type="visibility" size="small" [title]="'visibility'"></u-icon>
+                    </button>
+                    <button
+                      type="button"
+                      class="icon-button"
+                      aria-label="edit"
+                      (click)="openDialog('edit', data)"
+                    >
+                    <u-icon type="pencil" size="small" [title]="'pencil'"></u-icon>
+                    </button>
+                  </td>
+                </tr>
+              </ng-template>
+            </table>
+            </div>
+            <!-- <u-paginator
+                variant="expanded"
+                [length]="advancedTable.currentData.length"
+                [pageSize]="itemsPerPage"
+                [showFirstLastButtons]="true"
+                (page)="onPageChange($event)"
+              ></u-paginator>
+            </u-table-advanced> -->
+          </div>
+          <div class="u-grid-item u-xs-12 u-my-xs-2" *ngIf="allRows.length > 0; else noDataState">
+            <u-paginator
+              variant="expanded"
+              [length]="allRows.length"
+              [pageSize]="itemsPerPage"
+              (page)="onPageChange($event)"
+              [showFirstLastButtons]="true"
+            ></u-paginator>
+          </div>
+          <ng-template #noDataState>
+            <app-empty-state title="No enrollments found" hint="Try a different SSN or add a new enrollment."></app-empty-state>
+          </ng-template>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<div>
+  <u-dialog #formDialog ariaLabelledBy="formDialogTitle" [fullWidth]="true" maxWidth="lg">
+    <u-dialog-header>
+      <h4 uDialogTitle id="formDialogTitle">
+        {{ formTitle }}
+      </h4>
+      <button u-button (click)="closeDialog()">✕</button>
+    </u-dialog-header>
+    <u-dialog-content>
+      <app-autodebit-enrollment-detail
+        [mode]="dialogMode"
+        [record]="selectedRecord"
+        [submitRequested]="submitRequested"
+        (submitted)="handleSave($event)"
+      ></app-autodebit-enrollment-detail>
+    </u-dialog-content>
+    <u-dialog-actions>
+      <button u-button variant="outlined" color="neutral" (click)="closeDialog()">Cancel</button>
+      <button
+        *ngIf="dialogMode !== 'view'"
+        u-button
+        variant="contained"
+        type="button"
+        [disabled]="saving"
+        (click)="submitChildForm()"
+      >
+        {{ saveButtonTitle }}
+      </button>
+    </u-dialog-actions>
+  </u-dialog>
+</div>

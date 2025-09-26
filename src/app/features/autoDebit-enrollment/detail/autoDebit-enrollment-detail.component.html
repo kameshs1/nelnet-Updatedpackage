@@ -1,0 +1,267 @@
+<form [formGroup]="form" class="dialog-content">
+  <div class="u-grid-container u-grid-spacing--2">
+    <div class="u-grid-item">
+      <label [appRequiredStar]="mode !== 'view'" [appRequired]="true">
+        <span class="label-text">EFT Control</span>
+        <div class="u-grid-container u-grid-spacing--2">
+          <div class="u-grid-item">
+            <u-form-control class="u-mt-xs-0">
+              <u-radio-button>
+                <label uLabel for="eftControl_Yes">Yes</label>
+                <input
+                  uRadio
+                  type="radio"
+                  id="eftControl_Yes"
+                  name="eftControl"
+                  formControlName="eftControl"
+                  value="Y"
+                />
+              </u-radio-button>
+            </u-form-control>
+          </div>
+          <div class="u-grid-item">
+            <u-form-control class="u-mt-xs-0">
+              <u-radio-button>
+                <label uLabel for="eftControl_No">No</label>
+                <input
+                  uRadio
+                  type="radio"
+                  id="eftControl_No"
+                  name="eftControl"
+                  formControlName="eftControl"
+                  value="N"
+                />
+              </u-radio-button>
+            </u-form-control>
+          </div>
+          <div class="u-grid-item u-xs-12">
+            <app-form-error
+              [control]="form.get('eftControl')"
+              [errorMessages]="{
+                required: 'EFT Control is required',
+              }"
+            />
+          </div>
+        </div>
+      </label>
+    </div>
+    <div class="u-grid-item">
+      <label [appRequiredStar]="mode !== 'view'" [appRequired]="true">
+        <span class="label-text">EFT Eligible</span>
+        <div class="u-grid-container u-grid-spacing--2">
+          <div class="u-grid-item">
+            <u-form-control class="u-mt-xs-0">
+              <u-radio-button>
+                <label uLabel for="eftEligible_Yes">Yes</label>
+                <input
+                  uRadio
+                  type="radio"
+                  id="eftEligible_Yes"
+                  name="eftEligible"
+                  formControlName="eftEligible"
+                  value="Y"
+                />
+              </u-radio-button>
+            </u-form-control>
+          </div>
+          <div class="u-grid-item">
+            <u-form-control class="u-mt-xs-0">
+              <u-radio-button>
+                <label uLabel for="eftEligible_No">No</label>
+                <input
+                  uRadio
+                  type="radio"
+                  id="eftEligible_No"
+                  name="eftEligible"
+                  formControlName="eftEligible"
+                  value="N"
+                />
+              </u-radio-button>
+            </u-form-control>
+          </div>
+          <div class="u-grid-item u-xs-12">
+            <app-form-error
+              [control]="form.get('eftEligible')"
+              [errorMessages]="{
+                required: 'EFT Eligible is required',
+              }"
+            />
+          </div>
+        </div>
+      </label>
+    </div>
+    <div class="u-grid-item">
+      <label [appRequiredStar]="mode !== 'view'" [appRequired]="true">
+        <span class="label-text">Start Date</span>
+        <u-form-control
+          uDate
+          [plusMinusYearRange]="20"
+          pickerScrollStrategy="reposition"
+          class="u-mt-xs-0"
+        >
+          <input
+            u-textfield
+            type="text"
+            id="startDate"
+            name="startDate"
+            formControlName="startDate"
+          />
+        </u-form-control>
+      </label>
+      <div class="u-grid-item u-xs-12">
+        <app-form-error
+          [control]="form.get('startDate')"
+          [errorMessages]="{
+                required: 'Start Date is required',
+              }"
+        />
+      </div>
+    </div>
+    <div class="u-grid-item">
+      <label [appRequiredStar]="mode !== 'view'" [appRequired]="true">
+        <span class="label-text">End Date</span>
+        <u-form-control
+          uDate
+          [plusMinusYearRange]="20"
+          pickerScrollStrategy="reposition"
+          class="u-mt-xs-0"
+        >
+          <input
+            u-textfield
+            type="text"
+            id="endDate"
+            name="endDate"
+            formControlName="endDate"
+          />
+        </u-form-control>
+      </label>
+      <div class="u-grid-item u-xs-12">
+        <app-form-error
+          [control]="form.get('endDate')"
+          [errorMessages]="{
+                required: 'End Date is required',
+              }"
+        />
+      </div>
+    </div>
+  </div>
+  <div class="u-grid-container u-grid-spacing--2">
+    <div class="u-grid-item">
+      <label [appRequiredStar]="mode !== 'view'" [appRequired]="true">
+        <span class="label-text">Routing Number</span>
+        <input name="bankId" formControlName="bankId" />
+      </label>
+      <div class="u-grid-item u-xs-12">
+        <app-form-error
+          [control]="form.get('bankId')"
+          [errorMessages]="{
+                required: 'Bank ID is required',
+              }"
+        />
+      </div>
+    </div>
+    <div class="u-grid-item">
+      <label [appRequiredStar]="mode !== 'view'" [appRequired]="true">
+        <span class="label-text">Account Number</span>
+        <input name="accountNumber" formControlName="accountNumber" />
+      </label>
+      <div class="u-grid-item u-xs-12">
+        <app-form-error
+          [control]="form.get('accountNumber')"
+          [errorMessages]="{
+                required: 'Account number too short',
+                minlength: 'Invalid routing number format',
+              }"
+        />
+      </div>
+    </div>
+    <div class="u-grid-item">
+      <label [appRequiredStar]="mode !== 'view'" [appRequired]="true">
+        <span class="label-text">C/S Ind</span>
+        <u-form-control class="u-mt-xs-0">
+          <select
+            uSelect
+            name="csInd"
+            id="csInd"
+            formControlName="csInd"
+            width="160px"
+          >
+            @for (item of csIndOptions; track item.label) {
+            <option [value]="item.value">{{ item.label }}</option>
+            }
+          </select>
+        </u-form-control>
+      </label>
+      <div class="u-grid-item u-xs-12">
+        <app-form-error
+          [control]="form.get('csInd')"
+          label="C/S Ind"
+          [errorMessages]="{
+            required: 'C/S Ind is required',
+          }"
+        />
+      </div>
+    </div>
+    <div class="u-grid-item">
+      <label [appRequiredStar]="mode !== 'view'" [appRequired]="true">
+        <span class="label-text">Last Change Date</span>
+        <u-form-control
+          uDate
+          [plusMinusYearRange]="20"
+          pickerScrollStrategy="reposition"
+          class="u-mt-xs-0"
+        >
+          <input
+            u-textfield
+            type="text"
+            id="lastChange"
+            name="lastChange"
+            formControlName="lastChange"
+          />
+        </u-form-control>
+      </label>
+      <div class="u-grid-item u-xs-12">
+        <app-form-error
+          [control]="form.get('lastChange')"
+          [errorMessages]="{
+                required: 'Last Change Date is required',
+              }"
+        />
+      </div>
+    </div>
+  </div>
+  <div class="u-grid-container u-grid-spacing--1">
+    <div class="u-grid-item">
+      <label [appRequiredStar]="mode !== 'view'" [appRequired]="true">
+        <span class="label-text">Override</span>
+        <u-form-control class="u-mt-xs-0">
+          <select
+            uSelect
+            name="override"
+            id="override"
+            formControlName="override"
+            width="160px"
+          >
+            @for (item of overrideOptions; track item.label) {
+            <option [value]="item.value">{{ item.label }}</option>
+            }
+          </select>
+        </u-form-control>
+      </label>
+    </div>
+    <div class="u-grid-item">
+      <label [appRequiredStar]="mode !== 'view'" [appRequired]="true">
+        <span class="label-text">Process Day</span>
+        <input name="processDay" formControlName="processDay" />
+      </label>
+      <div class="u-grid-item u-xs-12">
+        <app-form-error
+          [control]="form.get('processDay')"
+          [errorMessages]="{
+                required: 'Process Day is required',
+              }"
+        />
+      </div>
+    </div>
+  </div>
+</form>
